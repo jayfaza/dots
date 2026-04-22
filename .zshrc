@@ -75,6 +75,7 @@ export NVM_DIR="$HOME/.nvm"
 # ---------- 🧹 АЛИАСЫ ----------
 alias ..='cd ..'
 alias ...='cd ../..'
+alias dotpush='yadm add -u && yadm commit -m "update $(date +%F)" && yadm push'
 
 alias ls='lsd'
 alias ll='lsd -lah'
