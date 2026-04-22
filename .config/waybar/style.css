@@ -3,7 +3,7 @@
 /* === GLOBAL === */
 * {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   font-family: "JetBrains Mono Nerd Font";
   color: @on_surface;
 }
@@ -32,43 +32,61 @@ window#waybar {
   min-height: 0;
   min-width: 0;
   color: @primary;
-  transition: color 0.25s ease, opacity 0.25s ease;
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
 }
 
 #clock:hover {
-  color: @secondary;
-  opacity: 0.8;
+  color: @on_surface_variant;
+  opacity: 0.7;
 }
 
 /* === WORKSPACES === */
+
 #workspaces {
-  padding: 0 4px;
-  margin: 0;
+  padding: 0;
+  margin: 0 0 0 8px;
 }
 
 #workspaces button {
   all: unset;
-  padding: 0 2px;
-  margin: 0 2px;
+  padding: 1px 7px;
+  margin: 4px 2px;
   background: transparent;
-  border: none;
+  border-radius: 50px;
   min-height: 0;
-  min-width: 20px;
-  transition: color 0.25s ease, opacity 0.25s ease;
+  min-width: 10px;
+  transition:
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    min-width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease,
+    color 0.3s ease;
 }
 
 #workspaces button label {
-  color: @primary;
-  transition: color 0.25s ease, opacity 0.25s ease;
+  color: @on_surface_variant;
+  transition:
+    color 0.3s ease,
+    opacity 0.3s ease;
+}
+
+#workspaces button:hover {
+  background-color: @surface_container_high;
 }
 
 #workspaces button:hover label {
-  color: @secondary;
-  opacity: 0.8;
+  color: @primary;
+  opacity: 1;
+}
+
+#workspaces button.active {
+  background-color: @primary_container;
+  min-width: 26px;
 }
 
 #workspaces button.active label {
-  color: @primary;
+  color: @on_primary_container;
   opacity: 1;
 }
 
@@ -77,8 +95,8 @@ window#waybar {
   color: @primary;
   font-size: 16px;
   padding: 0 10px;
-  margin: 2px 6px 2px 0;
-  border-radius: 6px;
+  margin: 4px 4px 4px 0;
+  border-radius: 20px;
   background: transparent;
   transition:
     color 0.25s ease,
@@ -93,6 +111,58 @@ window#waybar {
 }
 
 #custom-power:active {
+  background-color: @primary;
+  color: @on_primary;
+  opacity: 0.7;
+}
+
+/* === PACMAN === */
+#custom-pacman {
+  color: @primary;
+  font-size: 14px;
+  padding: 0 10px;
+  margin: 4px 4px;
+  border-radius: 20px;
+  background: transparent;
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    opacity 0.2s ease;
+}
+
+#custom-pacman:hover {
+  color: @on_primary_container;
+  background-color: @primary_container;
+  opacity: 0.9;
+}
+
+#custom-pacman:active {
+  background-color: @primary;
+  color: @on_primary;
+  opacity: 0.7;
+}
+
+/* === SWAYNC === */
+#custom-swaync {
+  color: @primary;
+  font-size: 16px;
+  padding: 0 10px;
+  margin: 4px 4px;
+  border-radius: 20px;
+  background: transparent;
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    opacity 0.2s ease;
+}
+
+#custom-swaync:hover {
+  color: @on_primary_container;
+  background-color: @primary_container;
+  opacity: 0.9;
+}
+
+#custom-swaync:active {
   background-color: @primary;
   color: @on_primary;
   opacity: 0.7;

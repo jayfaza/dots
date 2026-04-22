@@ -1,129 +1,191 @@
 {
-  // Bar geometry
-  "id": "max",
-  "layer": "top",
-  "position": "top",
-  "height": 26,
-  "spacing": 0,
-  "reload_style_on_change": true,
-
-  // Layout
-  "modules-left":   ["hyprland/workspaces"],
-  "modules-center": ["clock"],
-  "modules-right":  ["custom/power"],
-
-  // ── Workspaces ──────────────────────────────────────────────
-  "hyprland/workspaces": {
-    "format": "{icon}",
-    "format-icons": {
-      "1": "1", "2": "2", "3": "3",
-      "4": "4", "5": "5", "6": "6",
-      "7": "7", "8": "8", "9": "9",
-      "active": "",
-      "default": ""
+    // Bar geometry
+    "id": "max",
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "spacing": 0,
+    "reload_style_on_change": true,
+    // Layout
+    "modules-left": [
+        "niri/workspaces"
+    ],
+    "modules-center": [
+        "custom/swaync",
+        "clock",
+        "custom/pacman"
+    ],
+    "modules-right": [
+        "custom/power"
+    ],
+    // ── Workspaces ──────────────────────────────────────────────
+    "niri/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "default": "·"
+        },
+        "on-click": "activate"
     },
-    "on-click": "activate",
-    "persistent-workspaces": {
-      "1": [], "2": [], "3": [], "4": [], "5": []
+    // ── Clock ────────────────────────────────────────────────────
+    "clock": {
+        "format": "{:L%A %H:%M}",
+        "tooltip": false
+    },
+    // ── Swaync ───────────────────────────────────────────────────
+    "custom/swaync": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "󱅫",
+            "none": "󰂚",
+            "dnd-notification": "󱅫",
+            "dnd-none": "󰂚",
+            "inhibited-notification": "󱅫",
+            "inhibited-none": "󰂚",
+            "dnd-inhibited-notification": "󱅫",
+            "dnd-inhibited-none": "󰂚"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+    // ── Pacman updates ───────────────────────────────────────────
+    "custom/pacman": {
+        "format": "󰮯 {}",
+        "interval": 3600,
+        "exec": "checkupdates 2>/dev/null | wc -l",
+        "exec-if": "checkupdates 2>/dev/null | grep -q .",
+        "on-click": "alacritty -e sh -c 'sudo pacman -Syu; echo; echo Done — press Enter to close; read'",
+        "tooltip-format": "Доступно обновлений: {}",
+        "tooltip": true,
+        "escape": true
+    },
+    // ── Power button ─────────────────────────────────────────────
+    "custom/power": {
+        "format": "󰐥",
+        "tooltip": false,
+        "on-click": "~/scripts/menu-system.sh"
+    },
+    // ── Network ──────────────────────────────────────────────────
+    "network": {
+        "format": "{icon}",
+        "format-disconnected": "󰤮",
+        "format-ethernet": "󰀂",
+        "format-icons": [
+            "󰤯",
+            "󰤟",
+            "󰤢",
+            "󰤥",
+            "󰤨"
+        ],
+        "format-wifi": "{icon}",
+        "interval": 3,
+        "spacing": 1,
+        "on-click": "nm-connection-editor",
+        "tooltip-format-disconnected": "Disconnected",
+        "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+        "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}"
+    },
+    // ── Battery ──────────────────────────────────────────────────
+    "battery": {
+        "interval": 5,
+        "format": "{capacity}% {icon}",
+        "format-charging": "{icon}",
+        "format-discharging": "{icon}",
+        "format-full": "󰂅",
+        "format-plugged": "",
+        "format-icons": {
+            "charging": [
+                "󰢜",
+                "󰂆",
+                "󰂇",
+                "󰂈",
+                "󰢝",
+                "󰂉",
+                "󰢞",
+                "󰂊",
+                "󰂋",
+                "󰂅"
+            ],
+            "default": [
+                "󰁺",
+                "󰁻",
+                "󰁼",
+                "󰁽",
+                "󰁾",
+                "󰁿",
+                "󰂀",
+                "󰂁",
+                "󰂂",
+                "󰁹"
+            ]
+        },
+        "states": {
+            "warning": 20,
+            "critical": 10
+        },
+        "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+        "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+        "on-click": "~/.local/share/custom/bin/walker-menu.sh power"
+    },
+    // ── Bluetooth ────────────────────────────────────────────────
+    "bluetooth": {
+        "format": "",
+        "format-connected": "",
+        "format-disabled": "󰂲",
+        "on-click": "blueberry",
+        "tooltip-format": "Devices connected: {num_connections}"
+    },
+    // ── CPU ──────────────────────────────────────────────────────
+    "cpu": {
+        "format": "󰍛",
+        "interval": 5,
+        "on-click": "alacritty --class=FloatingTermL -e sh -c \"cat ~/.cache/wal/sequences & btop\""
+    },
+    // ── Audio ────────────────────────────────────────────────────
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-icons": {
+            "default": [
+                "",
+                "",
+                ""
+            ]
+        },
+        "format-muted": "",
+        "tooltip-format": "Playing at {volume}%"
+    },
+    // ── Tray ─────────────────────────────────────────────────────
+    "tray": {
+        "icon-size": 12,
+        "spacing": 12
+    },
+    // ── Expandable tray group ────────────────────────────────────
+    "group/tray-expander": {
+        "orientation": "inherit",
+        "drawer": {
+            "children-class": "tray-group-item",
+            "transition-duration": 600
+        },
+        "modules": [
+            "custom/expand-icon",
+            "bluetooth",
+            "network",
+            "pulseaudio",
+            "cpu",
+            "battery"
+        ]
     }
-  },
-
-  // ── Clock ────────────────────────────────────────────────────
-  "clock": {
-    "format": "| {:L%A %H:%M} |",
-    "tooltip": false,
-    "on-click": "swaync-client -op"   // open notification center
-  },
-
-  // ── Power button ─────────────────────────────────────────────
-  "custom/power": {
-    "format": "󰐥",
-    "tooltip": false,
-    "on-click": "~/scripts/menu-system.sh"
-  },
-
-  // ── Network ──────────────────────────────────────────────────
-  "network": {
-    "format": "{icon}",
-    "format-disconnected": "󰤮",
-    "format-ethernet": "󰀂",
-    "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
-    "format-wifi": "{icon}",
-    "interval": 3,
-    "spacing": 1,
-    "on-click": "nm-connection-editor",
-    "tooltip-format-disconnected": "Disconnected",
-    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
-    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}"
-  },
-
-  // ── Battery ──────────────────────────────────────────────────
-  "battery": {
-    "interval": 5,
-    "format": "{capacity}% {icon}",
-    "format-charging": "{icon}",
-    "format-discharging": "{icon}",
-    "format-full": "󰂅",
-    "format-plugged": "",
-    "format-icons": {
-      "charging": ["󰢜","󰂆","󰂇","󰂈","󰢝","󰂉","󰢞","󰂊","󰂋","󰂅"],
-      "default":  ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"]
-    },
-    "states": {
-      "warning": 20,
-      "critical": 10
-    },
-    "tooltip-format-charging":    "{power:>1.0f}W↑ {capacity}%",
-    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
-    "on-click": "~/.local/share/custom/bin/walker-menu.sh power"
-  },
-
-  // ── Bluetooth ────────────────────────────────────────────────
-  "bluetooth": {
-    "format": "",
-    "format-connected": "",
-    "format-disabled": "󰂲",
-    "on-click": "blueberry",
-    "tooltip-format": "Devices connected: {num_connections}"
-  },
-
-  // ── CPU ──────────────────────────────────────────────────────
-  "cpu": {
-    "format": "󰍛",
-    "interval": 5,
-    "on-click": "alacritty --class=FloatingTermL -e sh -c \"cat ~/.cache/wal/sequences & btop\""
-  },
-
-  // ── Audio ────────────────────────────────────────────────────
-  "pulseaudio": {
-    "format": "{icon}",
-    "format-icons": {
-      "default": ["","",""]
-    },
-    "format-muted": "",
-    "tooltip-format": "Playing at {volume}%"
-  },
-
-  // ── Tray ─────────────────────────────────────────────────────
-  "tray": {
-    "icon-size": 12,
-    "spacing": 12
-  },
-
-  // ── Expandable tray group ────────────────────────────────────
-  "group/tray-expander": {
-    "orientation": "inherit",
-    "drawer": {
-      "children-class": "tray-group-item",
-      "transition-duration": 600
-    },
-    "modules": [
-      "custom/expand-icon",
-      "bluetooth",
-      "network",
-      "pulseaudio",
-      "cpu",
-      "battery"
-    ]
-  }
 }
