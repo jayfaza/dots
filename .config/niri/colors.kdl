@@ -1,6 +1,6 @@
 layout {
     border {
-        active-color "#e0c46d"
-        inactive-color "#16130b"
+        active-color "#b4c5ff"
+        inactive-color "#121318"
     }
 }
