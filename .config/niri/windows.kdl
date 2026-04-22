@@ -1,0 +1,34 @@
+include "colors.kdl"
+
+layout {
+    gaps 30 
+
+    default-column-width { proportion 0.5; }
+
+    focus-ring {
+        off
+    }
+
+    preset-column-widths {
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+
+    preset-window-heights {
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+
+    border {
+        on
+        width 2 
+    }
+
+    shadow {
+        on
+        softness 5 
+        spread 2 
+    }
+}

@@ -1,0 +1,23 @@
+input {
+    keyboard {
+        xkb {
+            layout "us,ru"
+            options "grp:caps_toggle,caps:none"
+        }
+        numlock false 
+        repeat-delay 200
+        repeat-rate 40
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+    }
+    mouse {
+        accel-profile "flat"
+        accel-speed 0.5
+    }
+    focus-follows-mouse max-scroll-amount="0%"
+    workspace-auto-back-and-forth
+
+}

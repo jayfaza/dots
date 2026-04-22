@@ -1,0 +1,65 @@
+[config.wallpaper]
+command = "awww"
+arguments = ["img", "--transition-type", "any", "--transition-fps", "60"]
+set = true
+
+[templates.userChrome]
+input_path = "~/.config/matugen/templates/userChrome.css.tpl"
+output_path = "~/.config/zen/gum3acyc.Default (release)/chrome/userChrome.css"
+
+[templates.userContent]
+input_path = "~/.config/matugen/templates/userContent.css.tpl"
+output_path = "~/.config/zen/gum3acyc.Default (release)/chrome/userContent.css"
+post_hook = "pkill -SIGUSR1 zen-browser"
+
+[templates.vesktop]
+input_path = '~/.config/matugen/templates/midnight-discord.css'
+output_path = '~/.config/vesktop/themes/matugen.css'
+
+[templates.alacritty]
+input_path = '~/.config/matugen/templates/alacritty.toml'
+output_path = '~/.config/alacritty/colors.toml'
+
+[templates.niri]
+input_path = '~/.config/matugen/templates/niri-colors.kdl'
+output_path = '~/.config/niri/colors.kdl'
+
+[config.swaync]
+post_hook = "pkill -f swaync"
+set = true
+
+[templates.waybar]
+input_path = '~/.config/matugen/templates/colors.css'
+output_path = '~/.config/waybar/colors.css'
+post_hook = 'pkill -SIGUSR2 waybar'
+
+[templates.kitty]
+input_path = '~/.config/matugen/templates/kitty-colors.conf'
+output_path = '~/.config/kitty/colors.conf'
+post_hook = "pkill -SIGUSR1 kitty"
+
+[templates.hyprland]
+input_path = '~/.config/matugen/templates/hyprland-colors.conf'
+output_path = '~/.config/hypr/colors.conf'
+
+[templates.gtk3]
+input_path = '~/.config/matugen/templates/gtk-colors.css'
+output_path = '~/.config/gtk-3.0/colors.css'
+
+[templates.gtk4]
+input_path = '~/.config/matugen/templates/gtk-colors.css'
+output_path = '~/.config/gtk-4.0/colors.css'
+
+[templates.rofi]
+input_path = '~/.config/matugen/templates/rofi-colors.rasi'
+output_path = '~/.config/rofi/colors.rasi'
+
+[templates.cava]
+input_path = '~/.config/matugen/templates/matugen-cava'
+output_path = '~/.config/cava/config'
+
+[templates.spicetify]
+input_path = '~/.config/matugen/templates/spotify-colors.ini'
+output_path = '~/.config/spicetify/Themes/text/color.ini'
+
+

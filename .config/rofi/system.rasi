@@ -1,0 +1,196 @@
+/* ~/.config/rofi/system-menu.rasi */
+
+@import "/home/jayfaza/.config/rofi/colors.rasi"
+
+* {
+    bg-col: @surface;
+    bg-col-light: @surface-bright;
+    border-col: @outline;
+    selected-col: @surface-container-low;
+    blue: @primary-fixed-dim;
+    fg-col: @secondary;
+    fg-col2: @secondary-fixed-variant;
+    grey: #6e738d;
+    teal: @primary;
+    
+    /* Фиксированные размеры */
+    width: 500;
+    border-radius: 15px;
+    element-height: 50px;
+    font: "JetBrains Mono Nerd Font 12";
+    icon-size: 2em;
+}
+
+/* Основное окно */
+window {
+    width: 500px;
+    border: 2px;
+    border-color: @teal;
+    background-color: @bg-col;
+    border-radius: 15px;
+    padding: 0;
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    transparency: "real";
+}
+
+/* Главный контейнер */
+mainbox {
+    background-color: @bg-col;
+    border-radius: 15px;
+    padding: 15px;
+    spacing: 10px;
+    children: [inputbar, listview];
+}
+
+/* Поле ввода */
+inputbar {
+    background-color: @bg-col-light;
+    border-radius: 10px;
+    padding: 0;
+    margin: 0 0 10px 0;
+    spacing: 5px;
+    children: [prompt, entry];
+}
+
+/* Промпт (иконка/текст слева) */
+prompt {
+    background-color: @blue;
+    padding: 10px 15px;
+    text-color: @bg-col;
+    border-radius: 10px 0 0 10px;
+    font: "Font Awesome 6 Free 16";
+    str: "⚡";
+    width: 40px;
+    horizontal-align: 0.5;
+}
+
+/* Текстовое поле ввода */
+entry {
+    padding: 8px 12px;
+    text-color: @fg-col;
+    background-color: @bg-col-light;
+    border-radius: 0 10px 10px 0;
+    placeholder: "Search...";
+    placeholder-color: @grey;
+    font: "JetBrains Mono Nerd Font 12";
+    expand: true;
+    horizontal-align: 0;
+}
+
+/* Список элементов */
+listview {
+    background-color: @bg-col;
+    border-radius: 10px;
+    padding: 0;
+    margin: 0;
+    columns: 1;
+    lines: 5;
+    fixed-height: true;
+    dynamic: false;
+    spacing: 5px;
+    scrollbar: false;
+    scrollbar-width: 0;
+}
+
+/* Элемент списка */
+element {
+    padding: 0;
+    background-color: @bg-col-light;
+    text-color: @fg-col;
+    border-radius: 10px;
+    spacing: 0;
+    children: [element-icon, element-text];
+}
+
+/* Контейнер элемента (для выравнивания) */
+element alternate {
+    background-color: @bg-col;
+}
+
+/* Иконка элемента */
+element-icon {
+    size: 35px;
+    padding: 8px 0 8px 12px;
+    background-color: transparent;
+    text-color: @blue;
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+}
+
+/* Текст элемента */
+element-text {
+    padding: 8px 12px;
+    background-color: transparent;
+    text-color: @fg-col;
+    font: "JetBrains Mono Nerd Font 12";
+    vertical-align: 0.5;
+    horizontal-align: 0;
+    expand: true;
+}
+
+/* Выбранный элемент */
+element selected {
+    background-color: @selected-col;
+    text-color: @teal;
+}
+
+element selected element-icon {
+    text-color: @teal;
+}
+
+element selected element-text {
+    text-color: @teal;
+}
+
+/* Скроллбар (отключен) */
+scrollbar {
+    background-color: @bg-col-light;
+    width: 0;
+    handle-color: @blue;
+    handle-width: 0;
+}
+
+/* Сообщения об ошибках/информация */
+message {
+    background-color: @bg-col-light;
+    margin: 5px 0 0 0;
+    padding: 10px;
+    border-radius: 10px;
+    text-color: @blue;
+    font: "JetBrains Mono Nerd Font 11";
+}
+
+/* Текстовый блок */
+textbox {
+    padding: 12px 15px;
+    margin: 0;
+    text-color: @fg-col;
+    background-color: @bg-col-light;
+    border-radius: 10px;
+    font: "JetBrains Mono Nerd Font 12";
+}
+
+/* Кнопки режимов (если используются) */
+mode-switcher {
+    background-color: @bg-col;
+    spacing: 5px;
+    margin: 10px 0 0 0;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: @bg-col-light;
+    text-color: @grey;
+    border-radius: 8px;
+    font: "JetBrains Mono Nerd Font 11";
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+}
+
+button selected {
+    background-color: @selected-col;
+    text-color: @blue;
+}
+

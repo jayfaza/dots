@@ -1,0 +1,128 @@
+@import "/home/jayfaza/.config/rofi/colors.rasi"
+
+* {
+    bg-col: @surface;
+    bg-col-light: @surface-bright;
+    border-col: @outline;
+    selected-col: @surface-container-low;
+    blue: @primary-fixed-dim;
+    fg-col: @secondary;
+    fg-col2: @secondary-fixed-variant;
+    grey: #6e738d;
+    teal: @primary;
+
+    width: 500;
+    border-radius: 15px;
+}
+
+/* Полностью скрываем текстовые элементы */
+element-text {
+    enabled: false;
+    visible: false;
+}
+
+textbox-prompt-colon {
+    enabled: false;
+    visible: false;
+    str: "";
+}
+
+prompt {
+    enabled: false;
+    visible: false;
+    str: "";
+}
+
+entry {
+    enabled: false;
+    visible: false;
+}
+
+inputbar {
+    enabled: false;
+    visible: false;
+    children: [];
+}
+
+/* Основное окно на весь экран */
+window {
+    height: 50%;
+    width: 50%;
+    border: 2px;
+    border-color: @teal;
+    background-color: @bg-col;
+    transparency: "real";
+    location: center;
+    anchor: center;
+}
+
+mainbox {
+    background-color: @bg-col;
+    padding: 0;
+    margin: 0;
+}
+
+listview {
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+    background-color: @bg-col;
+    fixed-height: true;
+    dynamic: false;
+    fixed-columns: true;
+    scrollbar: false;
+    scrollbar-width: 0;
+}
+
+element {
+    background-color: @bg-col;
+    text-color: @fg-col;
+    orientation: vertical;
+    spacing: 0;
+    width: 100%;
+    height: 100%;
+}
+
+element-icon {
+    size: 517px;
+    width: 100%;
+    height: 100%;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    background-color: transparent;
+    /* Убираем иконку-заглушку, если она есть */
+    filename: "";
+    str: "";
+}
+
+element selected {
+    background-color: @selected-col;
+    border-radius: 8px;
+}
+
+/* Остальные элементы скрываем или отключаем */
+mode-switcher {
+    enabled: false;
+    visible: false;
+}
+
+button {
+    enabled: false;
+    visible: false;
+}
+
+message {
+    enabled: false;
+    visible: false;
+}
+
+textbox {
+    enabled: false;
+    visible: false;
+}
+
+scrollbar {
+    enabled: false;
+    visible: false;
+    width: 0;
+}

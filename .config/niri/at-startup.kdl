@@ -1,0 +1,5 @@
+spawn-at-startup "waybar"
+spawn-at-startup "swaync"
+spawn-at-startup "awww-daemon"
+prefer-no-csd
+screenshot-path "~/screenshots/screenshot-%d-%h-%m.png"

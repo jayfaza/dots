@@ -1,0 +1,20 @@
+layer-rule {
+    match namespace="waybar"
+
+    opacity 0.9
+    block-out-from "screencast"
+
+    shadow {
+        on
+        softness 40
+        spread 10 
+        offset x=0 y=5
+        draw-behind-window true 
+        color "#00000064"
+    }
+
+}
+layer-rule {
+    match namespace="rofi"
+    opacity 0.95
+}

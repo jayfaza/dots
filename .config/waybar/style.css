@@ -1,0 +1,112 @@
+@import url("colors.css");
+
+/* === GLOBAL === */
+* {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "JetBrains Mono Nerd Font";
+  color: @color7;
+}
+
+/* === BAR === */
+window#waybar {
+  all: unset;
+  background: @surface;
+  min-height: 0;
+}
+
+/* === MODULE CONTAINERS === */
+.modules-left,
+.modules-center,
+.modules-right {
+  margin: 0;
+  padding: 0;
+}
+
+/* === CLOCK === */
+#clock {
+  padding: 0 6px;
+  margin: 0 2px;
+  background: transparent;
+  border: none;
+  min-height: 0;
+  min-width: 0;
+  color: @primary;
+
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+#clock:hover {
+  color: @secondary;
+  opacity: 0.8;
+}
+
+/* === WORKSPACES === */
+#workspaces {
+  padding: 0 4px;
+  margin: 0;
+}
+
+/* кнопки */
+#workspaces button {
+  all: unset;
+  padding: 0 2px;
+  margin: 0 2px;
+  background: transparent;
+  border: none;
+  min-height: 0;
+  min-width: 20px;
+
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* текст */
+#workspaces button label {
+  color: @primary;
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* hover */
+#workspaces button:hover label {
+  color: @secondary;
+  opacity: 0.8;
+}
+
+/* active */
+#workspaces button.active {
+  margin: 0 2px;
+}
+
+/* active текст */
+#workspaces button.active label {
+  color: @primary;
+  opacity: 1;
+}
+
+#custom-aaaaaa {
+  color: @primary;
+  margin-right: 10px;
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+#custom-aaaaaa:hover {
+  color: @secondary;
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* === TOOLTIP === */
+tooltip {
+  background: @background;
+  color: @color7;
+  padding: 4px;
+}

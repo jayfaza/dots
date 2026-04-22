@@ -1,0 +1,9 @@
+include "at-startup.kdl"
+include "input.kdl"
+include "monitor.kdl"
+include "layer-rules.kdl"
+include "window-rules.kdl"
+include "windows.kdl"
+include "binds.kdl"
+include "animations.kdl"
+

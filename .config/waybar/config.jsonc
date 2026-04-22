@@ -1,0 +1,130 @@
+{
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-charging": "{icon}",
+    "format-discharging": "{icon}",
+    "format-full": "󰂅",
+    "format-icons": {
+      "charging": ["󰢜","󰂆","󰂇","󰂈","󰢝","󰂉","󰢞","󰂊","󰂋","󰂅"],
+      "default": ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"]
+    },
+    "format-plugged": "",
+    "interval": 5,
+    "on-click": "~/.local/share/custom/bin/walker-menu.sh power",
+    "states": {
+      "critical": 10,
+      "warning": 20
+    },
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%"
+  },
+
+  "bluetooth": {
+    "format": "",
+    "format-connected": "",
+    "format-disabled": "󰂲",
+    "on-click": "blueberry",
+    "tooltip-format": "Devices connected: {num_connections}"
+  },
+
+  "clock": {
+    "format": "| {:L%A %H:%M} |",
+    "tooltip": false,
+    "on-click": "swaync-client -op"
+  },
+
+  "cpu": {
+    "format": "󰍛",
+    "interval": 5,
+    "on-click": "alacritty --class=FloatingTermL -e sh -c \"cat ~/.cache/wal/sequences & btop\""
+  },
+
+  "custom/aaaaaa": {
+    "format": "󰐥",
+    "tooltip": false,
+    "on-click": "~/scripts/turh_off.sh"
+  },
+
+  "group/tray-expander": {
+    "drawer": {
+      "children-class": "tray-group-item",
+      "transition-duration": 600
+    },
+    "modules": [
+      "custom/expand-icon",
+      "bluetooth",
+      "network",
+      "pulseaudio",
+      "cpu",
+      "battery"
+    ],
+    "orientation": "inherit"
+  },
+
+  "height": 26,
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "active": "",
+      "default": ""
+    },
+    "on-click": "activate",
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": []
+    }
+  },
+
+  "id": "max",
+  "layer": "top",
+
+  "modules-right": ["custom/aaaaaa"],
+  "modules-center": ["clock"],
+  "modules-left": ["hyprland/workspaces"],
+
+  "network": {
+    "format": "{icon}",
+    "format-disconnected": "󰤮",
+    "format-ethernet": "󰀂",
+    "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
+    "format-wifi": "{icon}",
+    "interval": 3,
+    "on-click": "nm-connection-editor",
+    "spacing": 1,
+    "tooltip-format-disconnected": "Disconnected",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}"
+  },
+
+  "position": "top",
+
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-icons": {
+      "default": ["","",""]
+    },
+    "format-muted": "",
+    "tooltip-format": "Playing at {volume}%"
+  },
+
+  "reload_style_on_change": true,
+  "spacing": 0,
+
+  "tray": {
+    "icon-size": 12,
+    "spacing": 12
+  }
+}

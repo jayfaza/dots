@@ -1,0 +1,5 @@
+output "HDMI-A-1" {
+    scale 1.0
+    transform "normal"
+    mode "1920x1080@239.999"
+}

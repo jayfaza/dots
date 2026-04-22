@@ -1,0 +1,185 @@
+spawn-at-startup "waybar"
+spawn-at-startup "swaync"
+spawn-at-startup "awww-daemon"
+prefer-no-csd
+screenshot-path "~/screenshots/screenshot-%d-%h-%m.png"
+
+input {
+    keyboard {
+        xkb {
+            layout "us,ru"
+            options "grp:caps_toggle,caps:none"
+        }
+        repeat-delay 200
+        repeat-rate 40
+    }
+
+    mouse {
+        accel-profile "flat"
+        accel-speed 0.5
+    }
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+
+output "HDMI-A-1" {
+    scale 1.0
+    transform "normal"
+    mode "1920x1080@239.999"
+}
+
+animations {
+    // Открытие окна
+    window-open {
+        duration-ms 300        
+        curve "ease-out-expo"
+    }
+    // Закрытие окна
+    window-close {
+        duration-ms 300
+        curve "ease-out-quad"
+    }
+    // Смена рабочего стола
+    workspace-switch {
+        spring damping-ratio=0.80 stiffness=800 epsilon=0.00001
+    }
+    // Перемещение окон
+    window-movement {
+        spring damping-ratio=0.80 stiffness=800 epsilon=0.0001
+    }
+
+    // Изменение размера окон
+    window-resize {
+        spring damping-ratio=0.60 stiffness=500 epsilon=0.0001
+    }
+
+    // Открытие обзора на рабочие столы
+    overview-open-close {
+        spring damping-ratio=0.60 stiffness=500 epsilon=0.0001
+    }
+
+    // Передвижение между окнами
+    horizontal-view-movement {
+        spring damping-ratio=0.80 stiffness=800 epsilon=0.0001
+    }
+
+    config-notification-open-close {
+        spring damping-ratio=0.6 stiffness=1000 epsilon=0.001
+    }
+
+}
+
+
+include "colors.kdl"
+
+layout {
+    gaps 30 
+
+    default-column-width { proportion 0.5; }
+
+    focus-ring {
+        off
+    }
+
+    preset-column-widths {
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+
+    preset-window-heights {
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+
+    border {
+        on
+        width 2 
+    }
+
+    shadow {
+        on
+        softness 5 
+        spread 2 
+    }
+}
+window-rule {
+    match title="Zen Browser"
+    open-maximized true
+}
+window-rule {
+    match app-id="^*Nautilus"
+    open-floating true
+    default-window-height { fixed 700; }
+    default-column-width { fixed 700; }
+    min-width 900 
+    max-width 900 
+    min-height 700 
+    max-height 900
+    default-floating-position x=470 y=180 relative-to="bottom-left"
+}
+
+window-rule {
+    geometry-corner-radius 20
+    clip-to-geometry true
+}
+
+layer-rule {
+    match namespace="waybar"
+    match at-startup=true
+
+    opacity 0.9
+    block-out-from "screencast"
+
+    shadow {
+        on
+        softness 40
+        spread 10 
+        offset x=0 y=5
+        draw-behind-window true 
+        color "#00000064"
+    }
+
+}
+
+
+binds {
+    Mod+Alt+B { show-hotkey-overlay; }
+    Mod+T hotkey-overlay-title="Open kitty terminal" { spawn "kitty"; }
+    Mod+E hotkey-overlay-title="Open file manager"{ spawn "nautilus"; }
+    Mod+W hotkey-overlay-title="Open browser" { spawn "zen-browser"; }
+    Mod+Tab hotkey-overlay-title="Open rofi apps launcher"{ spawn "rofi" "-show" "drun" "-theme"; }
+    Mod+Q hotkey-overlay-title="Select the random wallpaper"{ spawn "~/scripts/wch-random.sh"; }
+    Mod+O hotkey-overlay-title="toggle-overview" { toggle-overview; }
+    Mod+N hotkey-overlay-title="LockScreen" { spawn "hyprlock"; }
+    Mod+Ctrl+H hotkey-overlay-title="Open hiddify" { spawn "hiddify"; }
+    Mod+Ctrl+Delete { quit; }
+    Mod+Alt+L { move-column-right; }
+    Mod+Alt+H { move-column-left; }
+    Mod+Alt+J { move-window-to-workspace-down; }
+    Mod+Alt+K { move-window-to-workspace-up; }
+    Mod+R { switch-preset-column-width; }
+    Mod+X { close-window; }
+    Mod+H { focus-column-left; }
+    Mod+L { focus-column-right; }
+    Mod+F { maximize-column; }
+    Mod+Alt+F { fullscreen-window; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+J { focus-workspace-down; }
+    Mod+K { focus-workspace-up; }
+
+    Mod+F10 { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+    Mod+F9 { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+
+    Delete { screenshot; }
+}
