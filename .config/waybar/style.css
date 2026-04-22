@@ -116,6 +116,32 @@ window#waybar {
   opacity: 0.7;
 }
 
+/* === SETTINGS === */
+#custom-settings {
+  color: @primary;
+  font-size: 16px;
+  padding: 0 8px;
+  margin: 4px 2px;
+  border-radius: 20px;
+  background: transparent;
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    opacity 0.2s ease;
+}
+
+#custom-settings:hover {
+  color: @on_primary_container;
+  background-color: @primary_container;
+  opacity: 0.9;
+}
+
+#custom-settings:active {
+  background-color: @primary;
+  color: @on_primary;
+  opacity: 0.7;
+}
+
 /* === PACMAN === */
 #custom-pacman {
   color: @primary;
