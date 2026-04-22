@@ -5,7 +5,7 @@
   font-size: 14px;
   font-weight: 500;
   font-family: "JetBrains Mono Nerd Font";
-  color: @color7;
+  color: @on_surface;
 }
 
 /* === BAR === */
@@ -32,10 +32,7 @@ window#waybar {
   min-height: 0;
   min-width: 0;
   color: @primary;
-
-  transition:
-    color 0.25s ease,
-    opacity 0.25s ease;
+  transition: color 0.25s ease, opacity 0.25s ease;
 }
 
 #clock:hover {
@@ -49,7 +46,6 @@ window#waybar {
   margin: 0;
 }
 
-/* кнопки */
 #workspaces button {
   all: unset;
   padding: 0 2px;
@@ -58,55 +54,55 @@ window#waybar {
   border: none;
   min-height: 0;
   min-width: 20px;
-
-  transition:
-    color 0.25s ease,
-    opacity 0.25s ease;
+  transition: color 0.25s ease, opacity 0.25s ease;
 }
 
-/* текст */
 #workspaces button label {
   color: @primary;
-  transition:
-    color 0.25s ease,
-    opacity 0.25s ease;
+  transition: color 0.25s ease, opacity 0.25s ease;
 }
 
-/* hover */
 #workspaces button:hover label {
   color: @secondary;
   opacity: 0.8;
 }
 
-/* active */
-#workspaces button.active {
-  margin: 0 2px;
-}
-
-/* active текст */
 #workspaces button.active label {
   color: @primary;
   opacity: 1;
 }
 
-#custom-aaaaaa {
+/* === POWER BUTTON === */
+#custom-power {
   color: @primary;
-  margin-right: 10px;
+  font-size: 16px;
+  padding: 0 10px;
+  margin: 2px 6px 2px 0;
+  border-radius: 6px;
+  background: transparent;
   transition:
     color 0.25s ease,
-    opacity 0.25s ease;
+    background-color 0.25s ease,
+    opacity 0.2s ease;
 }
 
-#custom-aaaaaa:hover {
-  color: @secondary;
-  transition:
-    color 0.25s ease,
-    opacity 0.25s ease;
+#custom-power:hover {
+  color: @on_primary_container;
+  background-color: @primary_container;
+  opacity: 0.9;
+}
+
+#custom-power:active {
+  background-color: @primary;
+  color: @on_primary;
+  opacity: 0.7;
 }
 
 /* === TOOLTIP === */
 tooltip {
-  background: @background;
-  color: @color7;
-  padding: 4px;
+  background: @surface_container;
+  color: @on_surface;
+  border: 1px solid @outline_variant;
+  border-radius: 6px;
+  padding: 4px 8px;
 }

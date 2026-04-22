@@ -1,22 +1,22 @@
 -- ============================================================
--- БИНДИНГИ
--- Формат: km("режим", "клавиша", действие, { desc = "..." })
--- Режимы: "n" = normal, "i" = insert, "v" = visual, "t" = terminal
+-- KEYMAPS
+-- Format: km("mode", "key", action, { desc = "..." })
+-- Modes: "n" = normal, "i" = insert, "v" = visual, "t" = terminal
 -- ============================================================
 
 local km = vim.keymap.set
 
 -- ------------------------------------------------------------
--- ТАБЫ
+-- TABS
 -- ------------------------------------------------------------
-km("n", "<C-Right>",   vim.cmd.tabnext,     { desc = "Next tab" })
-km("n", "<C-Left>",    vim.cmd.tabprevious, { desc = "Prev tab" })
+km("n", "<C-Right>",    vim.cmd.tabnext,     { desc = "Next tab" })
+km("n", "<C-Left>",     vim.cmd.tabprevious, { desc = "Prev tab" })
 km("n", "<C-PageDown>", vim.cmd.tabnext)
 km("n", "<C-PageUp>",   vim.cmd.tabprevious)
-km("n", "<leader>tn",  vim.cmd.tabnew,      { desc = "New tab" })
-km("n", "<leader>tc",  vim.cmd.tabclose,    { desc = "Close tab" })
+km("n", "<leader>tn",   vim.cmd.tabnew,      { desc = "New tab" })
+km("n", "<leader>tc",   vim.cmd.tabclose,    { desc = "Close tab" })
 
--- <leader>1-9 для быстрого перехода к табу
+-- <leader>1-9 to jump to tab by number
 for i = 1, 9 do
 	km("n", "<leader>" .. i, function()
 		vim.cmd(i == 9 and "tablast" or "tabnext " .. i)
@@ -24,7 +24,7 @@ for i = 1, 9 do
 end
 
 -- ------------------------------------------------------------
--- ОКНА
+-- WINDOWS
 -- ------------------------------------------------------------
 km("n", "<C-h>", "<C-w>h", { desc = "Window left" })
 km("n", "<C-j>", "<C-w>j", { desc = "Window down" })
@@ -41,10 +41,10 @@ km("n", "-", "<cmd>vertical resize -5<cr>",   { desc = "Width -" })
 km("n", "+", "<cmd>horizontal resize +5<cr>", { desc = "Height +" })
 
 -- ------------------------------------------------------------
--- НАВИГАЦИЯ
+-- NAVIGATION
 -- ------------------------------------------------------------
-km("n", "<C-d>", "<C-d>zz", { desc = "Scroll down" })
-km("n", "<C-u>", "<C-u>zz", { desc = "Scroll up" })
+km("n", "<C-d>", "<C-d>zz", { desc = "Scroll down (centered)" })
+km("n", "<C-u>", "<C-u>zz", { desc = "Scroll up (centered)" })
 
 km("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 km("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
@@ -52,48 +52,48 @@ km("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 -- ------------------------------------------------------------
 -- LSP
 -- ------------------------------------------------------------
-km("n", "K",           vim.lsp.buf.hover,        { desc = "Hover docs" })
-km("n", "gd",          vim.lsp.buf.definition,   { desc = "Go to definition" })
-km("n", "gr",          vim.lsp.buf.references,   { desc = "References" })
-km("n", "gD",          vim.lsp.buf.declaration,  { desc = "Declaration" })
-km("n", "gi",          vim.lsp.buf.implementation, { desc = "Implementation" })
-km("n", "<leader>lr",  vim.lsp.buf.rename,       { desc = "Rename symbol" })
-km("n", "<leader>la",  vim.lsp.buf.code_action,  { desc = "Code action" })
-km("n", "[e",          vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
-km("n", "]e",          vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+km("n", "K",          vim.lsp.buf.hover,          { desc = "Hover docs" })
+km("n", "gd",         vim.lsp.buf.definition,     { desc = "Go to definition" })
+km("n", "gr",         vim.lsp.buf.references,     { desc = "References" })
+km("n", "gD",         vim.lsp.buf.declaration,    { desc = "Declaration" })
+km("n", "gi",         vim.lsp.buf.implementation, { desc = "Implementation" })
+km("n", "<leader>lr", vim.lsp.buf.rename,         { desc = "Rename symbol" })
+km("n", "<leader>la", vim.lsp.buf.code_action,    { desc = "Code action" })
+km("n", "[e",         vim.diagnostic.goto_prev,   { desc = "Prev diagnostic" })
+km("n", "]e",         vim.diagnostic.goto_next,   { desc = "Next diagnostic" })
 
 -- ------------------------------------------------------------
--- КОД
+-- CODE
 -- ------------------------------------------------------------
 km("n", "<leader>cf", function()
 	require("conform").format({ async = true })
 end, { desc = "Format file" })
 
 -- ------------------------------------------------------------
--- TELESCOPE (поиск)
+-- TELESCOPE (fuzzy search)
 -- ------------------------------------------------------------
-km("n", "<leader>ff", function() require("telescope.builtin").find_files() end,  { desc = "Find files" })
-km("n", "<leader>fg", function() require("telescope.builtin").live_grep() end,   { desc = "Live grep" })
-km("n", "<leader>fb", function() require("telescope.builtin").buffers() end,     { desc = "Buffers" })
-km("n", "<leader>fr", function() require("telescope.builtin").oldfiles() end,    { desc = "Recent files" })
-km("n", "<leader>fh", function() require("telescope.builtin").help_tags() end,   { desc = "Help tags" })
+km("n", "<leader>ff", function() require("telescope.builtin").find_files() end,                          { desc = "Find files" })
+km("n", "<leader>fg", function() require("telescope.builtin").live_grep() end,                           { desc = "Live grep" })
+km("n", "<leader>fb", function() require("telescope.builtin").buffers() end,                             { desc = "Buffers" })
+km("n", "<leader>fr", function() require("telescope.builtin").oldfiles() end,                            { desc = "Recent files" })
+km("n", "<leader>fh", function() require("telescope.builtin").help_tags() end,                           { desc = "Help tags" })
 km("n", "<C-n>",      function() require("telescope.builtin").colorscheme({ enable_preview = true }) end, { desc = "Colorscheme picker" })
 
 -- ------------------------------------------------------------
--- ФАЙЛОВЫЙ МЕНЕДЖЕР
+-- FILE EXPLORER
 -- ------------------------------------------------------------
-km("n", "<leader>e", "<CMD>Oil<CR>", { desc = "File explorer" })
+km("n", "<leader>e", "<CMD>Oil<CR>", { desc = "File explorer (Oil)" })
 
 -- ------------------------------------------------------------
--- ТЕРМИНАЛ
+-- TERMINAL
 -- ------------------------------------------------------------
 km("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<cr>", { desc = "Terminal horizontal" })
 km("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<cr>",   { desc = "Terminal vertical" })
 km("n", "<leader>tf", "<cmd>ToggleTerm direction=float<cr>",      { desc = "Terminal float" })
 
 -- ------------------------------------------------------------
--- ВИЗУАЛЬНЫЕ TOGGLES  (<leader>u = UI)
--- Все изменения сохраняются и восстанавливаются при следующем запуске
+-- UI TOGGLES  (<leader>u prefix)
+-- All state is saved and restored on next startup (ui_toggles.lua)
 -- ------------------------------------------------------------
 
 local T = require("ui_toggles")

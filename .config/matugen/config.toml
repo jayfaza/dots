@@ -1,6 +1,5 @@
 [config.wallpaper]
-command = "awww"
-arguments = ["img", "--transition-type", "any", "--transition-fps", "60"]
+command = "awww img --transition-type any --transition-fps 60 {{image}}"
 set = true
 
 [templates.userChrome]
@@ -10,7 +9,7 @@ output_path = "~/.config/zen/gum3acyc.Default (release)/chrome/userChrome.css"
 [templates.userContent]
 input_path = "~/.config/matugen/templates/userContent.css.tpl"
 output_path = "~/.config/zen/gum3acyc.Default (release)/chrome/userContent.css"
-post_hook = "pkill -SIGUSR1 zen-browser"
+post_hook = "bash -c 'pkill -SIGUSR1 zen-browser 2>/dev/null; true'"
 
 [templates.vesktop]
 input_path = '~/.config/matugen/templates/midnight-discord.css'
@@ -23,10 +22,6 @@ output_path = '~/.config/alacritty/colors.toml'
 [templates.niri]
 input_path = '~/.config/matugen/templates/niri-colors.kdl'
 output_path = '~/.config/niri/colors.kdl'
-
-[config.swaync]
-post_hook = "pkill -f swaync"
-set = true
 
 [templates.waybar]
 input_path = '~/.config/matugen/templates/colors.css'
@@ -61,5 +56,3 @@ output_path = '~/.config/cava/config'
 [templates.spicetify]
 input_path = '~/.config/matugen/templates/spotify-colors.ini'
 output_path = '~/.config/spicetify/Themes/text/color.ini'
-
-

@@ -1,18 +1,18 @@
 -- ============================================================
--- ОСНОВНЫЕ НАСТРОЙКИ
--- Здесь только vim.opt / vim.g / vim.o — никакой логики
+-- EDITOR OPTIONS
+-- Only vim.opt / vim.g / vim.o here — no logic
 -- ============================================================
 
 vim.g.mapleader      = " "
 vim.g.maplocalleader = ","
 
--- Внешний вид
+-- Appearance
 vim.opt.number        = true
 vim.opt.termguicolors = true
-vim.opt.showmode      = false
-vim.opt.scrolloff     = 5
+vim.opt.showmode      = false   -- don't show -- INSERT -- in cmdline (lualine handles it)
+vim.opt.scrolloff     = 5       -- keep 5 lines above/below cursor
 vim.opt.signcolumn    = "no"
-vim.opt.fillchars     = {
+vim.opt.fillchars     = {       -- hide split border characters
 	vert      = " ",
 	horiz     = " ",
 	horizup   = " ",
@@ -23,36 +23,36 @@ vim.opt.fillchars     = {
 }
 vim.o.background = "dark"
 
--- Поиск
-vim.opt.ignorecase = true
-vim.opt.smartcase  = true
+-- Search
+vim.opt.ignorecase = true   -- case-insensitive search...
+vim.opt.smartcase  = true   -- ...unless query has uppercase letters
 
--- Буфер / файлы
-vim.opt.clipboard = "unnamedplus"
-vim.opt.hidden    = true
+-- Buffer / files
+vim.opt.clipboard = "unnamedplus"  -- use system clipboard
+vim.opt.hidden    = true           -- allow switching buffers without saving
 vim.opt.swapfile  = false
 vim.opt.backup    = false
-vim.opt.undofile  = true
+vim.opt.undofile  = true           -- persistent undo across sessions
 vim.opt.undodir   = vim.fn.stdpath("data") .. "/undo"
 
--- Мышь и скорость
-vim.opt.mouse      = "a"
-vim.opt.updatetime = 300
+-- Mouse and performance
+vim.opt.mouse      = "a"    -- enable mouse in all modes
+vim.opt.updatetime = 300    -- faster CursorHold / LSP response
 
--- Сплиты
-vim.opt.splitright = true
-vim.opt.splitbelow = true
+-- Splits
+vim.opt.splitright = true   -- vsplit opens to the right
+vim.opt.splitbelow = true   -- split opens below
 
--- Сообщения
-vim.opt.shortmess:append("c")
-vim.opt.shortmess:append("s")
-vim.opt.shortmess:append("I")
+-- Messages
+vim.opt.shortmess:append("c")  -- no "match x of y" completion messages
+vim.opt.shortmess:append("s")  -- no "search hit BOTTOM" messages
+vim.opt.shortmess:append("I")  -- no intro message on startup
 
--- Wildmenu (автодополнение команд)
+-- Wildmenu (command-line completion)
 vim.opt.wildmenu = true
 vim.opt.wildmode = "longest,list,full"
 
--- Отступы (дефолт — переопределяется по типу файла в autocmds.lua)
+-- Indentation (default — overridden per filetype in autocmds.lua)
 vim.opt.tabstop     = 4
 vim.opt.shiftwidth  = 4
 vim.opt.softtabstop = 4
@@ -60,17 +60,17 @@ vim.opt.expandtab   = true
 vim.opt.autoindent  = true
 vim.opt.smartindent = true
 
--- Автодополнение
+-- Completion
 vim.opt.completeopt = "menuone,noselect,preview"
 
--- Spell — выключен глобально
+-- Spell — disabled globally (enabled per filetype in autocmds.lua)
 vim.opt.spell = false
 
--- Оболочка
-vim.opt.shell        = "/bin/zsh-5.9"
+-- Shell
+vim.opt.shell        = "/usr/bin/zsh"
 vim.opt.shellcmdflag = "-c"
 
--- Диагностика LSP — полностью отключена
+-- LSP diagnostics — disabled globally, toggle with <leader>ud
 vim.diagnostic.enable(false)
 vim.diagnostic.config({
 	virtual_text = false,
@@ -78,5 +78,5 @@ vim.diagnostic.config({
 	underline    = false,
 })
 
--- Создаём папку для undo-истории если нет
+-- Create undo directory if it doesn't exist
 vim.fn.mkdir(vim.fn.stdpath("data") .. "/undo", "p")

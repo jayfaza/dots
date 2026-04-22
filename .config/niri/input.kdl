@@ -2,22 +2,23 @@ input {
     keyboard {
         xkb {
             layout "us,ru"
-            options "grp:caps_toggle,caps:none"
+            options "grp:caps_toggle,caps:none"  // CapsLock toggles layout, doesn't act as Caps
         }
-        numlock false 
-        repeat-delay 200
-        repeat-rate 40
+        numlock false
+        repeat-delay 200   // ms before key repeat starts
+        repeat-rate 40     // key repeats per second
     }
 
     touchpad {
-        tap
-        natural-scroll
+        tap                // tap-to-click
+        natural-scroll     // scroll direction follows finger movement
     }
+
     mouse {
-        accel-profile "flat"
+        accel-profile "flat"   // no pointer acceleration
         accel-speed 0.5
     }
-    focus-follows-mouse max-scroll-amount="0%"
-    workspace-auto-back-and-forth
 
+    focus-follows-mouse max-scroll-amount="0%"  // focus window under cursor without scrolling
+    workspace-auto-back-and-forth               // Mod+N on current workspace goes back to previous
 }
