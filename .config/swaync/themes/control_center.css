@@ -192,66 +192,147 @@ progressbar {
 }
 
 .widget-buttons-grid>flowbox>flowboxchild>button {
-  margin: 4px 10px;
-  padding: 6px 12px;
+  margin: 2px 4px;
+  padding: 5px 8px;
   background: transparent;
   border-radius: 8px;
+  transition: 200ms;
 }
 
 .widget-buttons-grid>flowbox>flowboxchild>button:hover {
-  background: @hover;
+  background: alpha(@primary, 0.15);
+  color: @primary;
+}
+
+.widget-buttons-grid>flowbox>flowboxchild>button:active {
+  background: alpha(@primary, 0.3);
+}
+
+.widget-buttons-grid>flowbox>flowboxchild>button.toggle:checked {
+  background: @primary_container;
+  color: @on_primary_container;
+}
+
+.widget-buttons-grid>flowbox>flowboxchild>button.toggle:checked:hover {
+  background: alpha(@primary, 0.35);
+  color: @primary;
 }
 
 
 /* Music player */
 .widget-mpris {
-  background: alpha(@hover, .50);
-  border-radius: 16px;
-  color: @text;
-  margin: 20px 6px;
+  background: transparent;
+  margin: 4px 0px;
 }
 
-/* NOTE: Background need *opacity 1* otherwise will turn into the album art blurred  */
 .widget-mpris-player {
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 14px;
-  padding: 6px 14px;
-  margin: 6px;
+  border: 1px solid alpha(@primary, 0.4);
+  border-radius: 16px;
+  padding: 8px 10px;
+  margin: 4px 0;
+  box-shadow: inset 0 0 80px 20px rgba(0, 0, 0, 0.82);
 }
 
 .widget-mpris>box>button {
-  color: @text;
+  color: @primary;
   border-radius: 20px;
+  padding: 4px 8px;
+  background: transparent;
+  transition: 200ms;
+}
+
+.widget-mpris>box>button:hover {
+  background: alpha(@primary, 0.15);
 }
 
 .widget-mpris button {
-  color: alpha(@text, .6);
+  color: alpha(@on_surface, 0.7);
+  border-radius: 12px;
+  padding: 2px 8px;
+  background: transparent;
+  transition: 200ms;
 }
 
 .widget-mpris button:hover {
-  color: @text;
+  color: @primary;
+  background: alpha(@primary, 0.12);
 }
 
 .widget-mpris-album-art {
-  border-radius: 12px;
-  margin: 6px 0 0 2px;
+  border-radius: 8px;
+  margin: 0 8px 0 0;
+  min-width: 40px;
+  min-height: 40px;
 }
 
 .widget-mpris-title {
-  font-weight: 700;
+  font-weight: 800;
   font-size: 1rem;
+  color: white;
 }
 
 .widget-mpris-subtitle {
   font-weight: 500;
   font-size: 0.8rem;
+  color: @primary;
 }
 
 /* Volume */
 .widget-volume {
-  background: @background-sec;
-  color: @background;
-  padding: 4px;
-  margin: 6px;
-  border-radius: 6px;
+  background: alpha(@primary, 0.06);
+  border: 1px solid alpha(@primary, 0.15);
+  border-radius: 14px;
+  padding: 6px 10px;
+  margin: 4px 6px;
+  color: @on_surface;
+}
+
+.widget-volume row {
+  background: transparent;
+  padding: 2px 0;
+}
+
+.widget-volume row image {
+  color: @primary;
+  margin-right: 8px;
+}
+
+.widget-volume scale {
+  margin: 4px 0;
+  padding: 0 4px;
+}
+
+.widget-volume scale trough {
+  background-color: alpha(@on_surface, 0.15);
+  border-radius: 99px;
+  min-height: 6px;
+  margin: 6px 0;
+}
+
+.widget-volume scale trough progress {
+  background-color: @primary;
+  border-radius: 99px;
+  min-height: 6px;
+}
+
+.widget-volume scale trough slider {
+  background-color: @primary;
+  border-radius: 50%;
+  min-width: 16px;
+  min-height: 16px;
+  margin: -5px 0;
+  box-shadow: 0 0 6px alpha(@primary, 0.6);
+  transition: 150ms;
+}
+
+.widget-volume scale trough slider:hover {
+  min-width: 18px;
+  min-height: 18px;
+  margin: -6px 0;
+}
+
+.per-app-volume {
+  background: transparent;
+  margin: 2px 0;
+  border-radius: 8px;
 }

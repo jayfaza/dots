@@ -1,6 +1,6 @@
 {
   "$schema": "/etc/xdg/swaync/configSchema.json",
-  "positionX": "center",
+  "positionX": "right",
   "positionY": "top",
   "layer": "overlay",
   "control-center-layer": "top",
@@ -17,7 +17,7 @@
   "notification-icon-size": 24,
   "notification-body-image-height": 100,
   "notification-body-image-width": 100,
-  "notification-window-width": 300,
+  "notification-window-width": 340,
   "timeout": 6,
   "timeout-low": 3,
   "timeout-critical": 0,
@@ -30,10 +30,25 @@
   "hide-on-clear": false,
   "hide-on-action": true,
   "script-fail-notify": true,
+  "scripts": {
+    "sound-normal": {
+      "exec": "pw-play /usr/share/sounds/freedesktop/stereo/message-new-instant.oga",
+      "urgency": "Normal"
+    },
+    "sound-low": {
+      "exec": "pw-play /usr/share/sounds/freedesktop/stereo/message-new-instant.oga",
+      "urgency": "Low"
+    },
+    "sound-critical": {
+      "exec": "pw-play /usr/share/sounds/freedesktop/stereo/dialog-warning.oga",
+      "urgency": "Critical"
+    }
+  },
   "widgets": [
       "buttons-grid",
       "volume",
       "backlight",
+      "mpris",
       "dnd",
       "title",
       "notifications"
@@ -54,26 +69,42 @@
           "text": "Do Not Disturb"
       },
       "mpris": {
-          "image-size": 50,
-          "image-radius": 12
+          "image-size": 40,
+          "image-radius": 8
       },
       "buttons-grid": {
           "actions": [
               {
                   "label": "󰤨",
-                  "command": "bash -c 'nmcli radio wifi $(nmcli radio wifi | grep -q enabled && echo off || echo on)'"
+                  "type": "toggle",
+                  "active": false,
+                  "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
+                  "update-command": "sh -c 'nmcli radio wifi | grep -q enabled && echo true || echo false'"
               },
               {
                   "label": "󰂯",
-                  "command": "bash -c 'bluetoothctl power $(bluetoothctl show | grep -q \"Powered: yes\" && echo off || echo on)'"
+                  "type": "toggle",
+                  "active": false,
+                  "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && bluetoothctl power on || bluetoothctl power off'",
+                  "update-command": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && echo true || echo false'"
               },
               {
-                  "label": "󰝟",
-                  "command": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+                  "label": "󰕾",
+                  "type": "toggle",
+                  "active": false,
+                  "command": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+                  "update-command": "sh -c 'pactl get-sink-mute @DEFAULT_SINK@ | grep -q \"yes\" && echo false || echo true'"
+              },
+              {
+                  "label": "󰍭",
+                  "type": "toggle",
+                  "active": false,
+                  "command": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+                  "update-command": "sh -c 'pactl get-source-mute @DEFAULT_SOURCE@ | grep -q \"yes\" && echo true || echo false'"
               },
               {
                   "label": "󰌾",
-                  "command": "loginctl lock-session"
+                  "command": "hyprlock"
               },
               {
                   "label": "󰐥",
