@@ -1,8 +1,14 @@
 layer-rule {
     match namespace="waybar"
 
-    opacity 0.9
+    opacity 0.85
     block-out-from "screencast"
+
+    blur {
+        on
+        passes 4 
+        radius 2 
+    }
 
     shadow {
         on
@@ -16,5 +22,16 @@ layer-rule {
 }
 layer-rule {
     match namespace="rofi"
-    opacity 0.95
+    opacity 0.90
+    block-out-from "screencast"
+    blur {
+        on
+        passes 3 
+        radius 2 
+    }
+}
+
+layer-rule {
+    match namespace="swaync"
+    opacity 0.90
 }

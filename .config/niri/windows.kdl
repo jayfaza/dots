@@ -25,10 +25,10 @@ layout {
         on
         width 2 
     }
-
     shadow {
         on
         softness 5 
         spread 2 
     }
 }
+

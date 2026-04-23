@@ -1,1 +1,1 @@
-return { name = "base16-black-metal-burzum" }
+return { name = "base16-default-dark" }

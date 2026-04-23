@@ -26,6 +26,11 @@ window-rule {
 window-rule {
     match app-id="vesktop"
     opacity 0.97
+    blur {
+        on
+        passes 2 
+        radius 1 
+    }
 }
 
 window-rule {
