@@ -1,1 +1,1 @@
-return { name = "base16-default-dark" }
+return { name = "base16-gruvbox-material-dark-soft" }
