@@ -53,30 +53,20 @@ command -v cliphist &>/dev/null && printf '%s' "$result" | cliphist store 2>/dev
 
 title="${src_label} → ${target}"
 
+# Формируем текст для показа
+orig_wrapped=$(printf '%s' "$text"   | fold -s -w 55)
+result_wrapped=$(printf '%s' "$result" | fold -s -w 55)
+display="${title}\n──────────────────────────────────────\n${orig_wrapped}\n\n${result_wrapped}"
+
 # Короткий результат — обычное уведомление
-if [[ ${#result} -le 80 ]]; then
-    notify-send -h boolean:transient:true "$title" "$result"
+if [[ ${#result} -le 100 ]]; then
+    notify-send -h boolean:transient:true "$title" "${orig_wrapped}\n${result_wrapped}"
     exit 0
 fi
 
-# Длинный — rofi popup с авторазмером по высоте
-# Оригинал и перевод построчно через rofi listview
-{
-    # Оригинал серым цветом (разбиваем по ~60 символов)
-    printf '%s' "$text" | fold -s -w 60 | while IFS= read -r line; do
-        printf '  %s\n' "$line"
-    done
-    printf '\n'
-    # Перевод
-    printf '%s' "$result" | fold -s -w 60 | while IFS= read -r line; do
-        printf '%s\n' "$line"
-    done
-} | rofi -dmenu \
-    -p "" \
-    -mesg "$title" \
-    -no-custom \
+# Длинный — rofi -e (встроенный message box, авторазмер)
+rofi -e "$(printf '%b' "$display")" \
     -theme "$HOME/.config/rofi/translate.rasi" \
-    -selected-row 0 \
     2>/dev/null
 
 exit 0
