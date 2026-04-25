@@ -3,6 +3,20 @@
 # Translate: текст из буфера → прямой Google API
 # Стратегия: запускаем en→ru и ru→en параллельно, берём нужный по определённому языку
 
+# Проверяем тип содержимого буфера
+mime=$(wl-paste --list-types 2>/dev/null | grep -v "^image/" | grep -E "text/plain|UTF" | head -1)
+
+if [[ -z "$mime" ]]; then
+    # Буфер пуст или содержит изображение/бинарные данные
+    clip_type=$(wl-paste --list-types 2>/dev/null | head -1)
+    if [[ "$clip_type" == image/* ]]; then
+        notify-send -u normal "Translate" "Clipboard contains an image, not text"
+    else
+        notify-send -u normal "Translate" "Clipboard is empty"
+    fi
+    exit 0
+fi
+
 text=$(wl-paste --no-newline 2>/dev/null)
 
 if [[ -z "$text" ]]; then
@@ -54,9 +68,8 @@ command -v cliphist &>/dev/null && printf '%s' "$result" | cliphist store 2>/dev
 title="${src_label} → ${target}"
 
 # Формируем текст для показа
-orig_wrapped=$(printf '%s' "$text"   | fold -s -w 55)
+orig_wrapped=$(printf '%s' "$text"     | fold -s -w 55)
 result_wrapped=$(printf '%s' "$result" | fold -s -w 55)
-display="${title}\n──────────────────────────────────────\n${orig_wrapped}\n\n${result_wrapped}"
 
 # Короткий результат — обычное уведомление
 if [[ ${#result} -le 100 ]]; then
@@ -64,9 +77,12 @@ if [[ ${#result} -le 100 ]]; then
     exit 0
 fi
 
-# Длинный — rofi -e (встроенный message box, авторазмер)
+# Длинный — rofi -e, заголовок вшит в текст как первая строка
+display="${title}\n$(printf '─%.0s' {1..40})\n${orig_wrapped}\n\n${result_wrapped}"
+
 rofi -e "$(printf '%b' "$display")" \
     -theme "$HOME/.config/rofi/translate.rasi" \
+    -theme-str '* { background-color: #0e1415; text-color: #b1cccd; } window { background-color: #0e1415; border-color: #80d4da; } textbox { background-color: #161d1d; text-color: #b1cccd; } element { background-color: #0e1415; text-color: #b1cccd; } element selected { background-color: #0e1415; text-color: #b1cccd; } element-text { highlight: none; text-color: #b1cccd; background-color: #0e1415; }' \
     2>/dev/null
 
 exit 0

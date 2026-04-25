@@ -1,26 +1,34 @@
 @import "colors.rasi"
 
 * {
-    background-color: @surface;
-    text-color:       @secondary;
-    font:             "JetBrains Mono Regular 12";
+    bg:     @surface;
+    bg-alt: @surface-bright;
+    border: @primary;
+    fg:     @secondary;
 }
 
 window {
-    background-color: @surface;
+    background-color: @bg;
     border:           2px;
-    border-color:     @primary;
+    border-color:     @border;
     border-radius:    16px;
-    padding:          20px;
-    width:            500px;
+    padding:          16px;
+    width:            520px;
+}
+
+mainbox {
+    background-color: @bg;
+    spacing:          10px;
+}
+
+message {
+    background-color: @bg-alt;
+    border-radius:    10px;
+    padding:          14px 16px;
 }
 
 textbox {
-    background-color: @surface;
-    text-color:       @secondary;
+    background-color: transparent;
+    text-color:       @fg;
     font:             "JetBrains Mono Regular 12";
-}
-
-box {
-    background-color: @surface;
 }
