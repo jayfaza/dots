@@ -82,7 +82,7 @@ display="${title}\n$(printf '─%.0s' {1..40})\n${orig_wrapped}\n\n${result_wrap
 
 rofi -e "$(printf '%b' "$display")" \
     -theme "$HOME/.config/rofi/translate.rasi" \
-    -theme-str '* { background-color: #0e1415; text-color: #b1cccd; } window { background-color: #0e1415; border-color: #80d4da; } textbox { background-color: #161d1d; text-color: #b1cccd; } element { background-color: #0e1415; text-color: #b1cccd; } element selected { background-color: #0e1415; text-color: #b1cccd; } element-text { highlight: none; text-color: #b1cccd; background-color: #0e1415; }' \
+    -theme-str '* { background-color: #0e1415; text-color: #b1cccd; } window { background-color: #0e1415; border-color: #80d4da; } textbox { background-color: #0e1415; text-color: #b1cccd; } element { background-color: #0e1415; text-color: #b1cccd; } element selected { background-color: #0e1415; text-color: #b1cccd; } element-text { highlight: none; text-color: #b1cccd; background-color: #0e1415; }' \
     2>/dev/null
 
 exit 0
