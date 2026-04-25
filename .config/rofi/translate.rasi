@@ -1,0 +1,74 @@
+@import "colors.rasi"
+
+* {
+    bg:     @surface;
+    border: @primary;
+    fg:     @secondary;
+    fg-sel: @primary;
+    bg-alt: @surface-bright;
+}
+
+window {
+    background-color: @bg;
+    border: 2px;
+    border-color: @border;
+    border-radius: 16px;
+    padding: 0;
+    width: 520px;
+    /* высота подстраивается под контент */
+    height:  min-content;
+}
+
+mainbox {
+    background-color: @bg;
+    padding: 16px;
+    spacing: 10px;
+    children: [message, listview];
+}
+
+/* Заголовок EN → RU в message box */
+message {
+    background-color: @bg-alt;
+    border-radius: 8px;
+    padding: 8px 14px;
+}
+
+textbox {
+    background-color: transparent;
+    text-color: @fg-sel;
+    font: "JetBrains Mono Bold 13";
+}
+
+listview {
+    background-color: transparent;
+    columns: 1;
+    lines: 999;
+    scrollbar: false;
+    spacing: 0;
+    padding: 0;
+    dynamic: true;
+}
+
+element {
+    background-color: transparent;
+    text-color: @fg;
+    padding: 3px 2px;
+    border-radius: 6px;
+    spacing: 0;
+}
+
+element selected {
+    background-color: transparent;
+    text-color: @fg;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    font: "JetBrains Mono Regular 12";
+    wrap: word;
+}
+
+inputbar {
+    enabled: false;
+}

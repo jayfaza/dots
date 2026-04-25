@@ -49,16 +49,34 @@ if [[ -z "$result" ]]; then
 fi
 
 printf '%s' "$result" | wl-copy
-
-orig_preview=$(printf '%s' "$text" | head -c 60)
-[[ ${#text} -gt 60 ]] && orig_preview="${orig_preview}…"
-result_preview=$(printf '%s' "$result" | head -c 120)
-[[ ${#result} -gt 120 ]] && result_preview="${result_preview}…"
-
-notify-send \
-    -h boolean:transient:true \
-    "${src_label} → ${target}" \
-    "${orig_preview}
-${result_preview}"
-
 command -v cliphist &>/dev/null && printf '%s' "$result" | cliphist store 2>/dev/null
+
+title="${src_label} → ${target}"
+
+# Короткий результат — обычное уведомление
+if [[ ${#result} -le 80 ]]; then
+    notify-send -h boolean:transient:true "$title" "$result"
+    exit 0
+fi
+
+# Длинный — rofi popup с авторазмером по высоте
+# Оригинал и перевод построчно через rofi listview
+{
+    # Оригинал серым цветом (разбиваем по ~60 символов)
+    printf '%s' "$text" | fold -s -w 60 | while IFS= read -r line; do
+        printf '  %s\n' "$line"
+    done
+    printf '\n'
+    # Перевод
+    printf '%s' "$result" | fold -s -w 60 | while IFS= read -r line; do
+        printf '%s\n' "$line"
+    done
+} | rofi -dmenu \
+    -p "" \
+    -mesg "$title" \
+    -no-custom \
+    -theme "$HOME/.config/rofi/translate.rasi" \
+    -selected-row 0 \
+    2>/dev/null
+
+exit 0
