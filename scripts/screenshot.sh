@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Вспышка экрана перед скриншотом
+niri msg action do-screen-transition --delay-ms 16
+
 output="$HOME/screenshots/$(date '+%Y-%m-%d_%H-%M-%S').png"
 mkdir -p "$HOME/screenshots"
 

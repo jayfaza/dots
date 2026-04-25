@@ -1,0 +1,129 @@
+// ── Shader Animations ─────────────────────────────────────────────────────────
+// Кастомные GLSL шейдеры для открытия, закрытия и ресайза окон.
+// Требует niri-blur форк (~/projects/rust/niri-blur).
+//
+// open   → Ripple Portal: окно вырастает из центра с волной-ripple
+// close  → Vortex Dissolve: окно засасывается в центр по спирали
+// resize → Liquid Crossfade: старый/новый контент перетекают с волновой границей
+
+animations {
+    window-open {
+        spring damping-ratio=0.82 stiffness=480 epsilon=0.0001
+        custom-shader r"
+vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+    float p = niri_clamped_progress;
+
+    float scale = p;
+    vec2 center = vec2(0.5, 0.5);
+    vec2 uv = (coords_geo.xy - center) / max(scale, 0.0001) + center;
+    vec3 coords_scaled = vec3(uv, 1.0);
+
+    vec2 delta = coords_geo.xy - center;
+    float dist = length(delta * size_geo.xy);
+    float wave_amp = 0.012 * (1.0 - p);
+    float wave = sin(dist * 6.0 - p * 14.0) * wave_amp;
+    vec2 dir = length(delta) > 0.0001 ? normalize(delta) : vec2(0.0);
+    coords_scaled.xy += dir * wave;
+
+    vec3 coords_tex = niri_geo_to_tex * coords_scaled;
+    vec4 color = texture2D(niri_tex, coords_tex.st);
+
+    if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0)
+        color = vec4(0.0);
+
+    float brightness = 1.0 + 0.3 * (1.0 - p) * (1.0 - p);
+    color.rgb *= brightness;
+    color *= p;
+
+    return color;
+}
+        "
+    }
+
+    window-close {
+        spring damping-ratio=0.90 stiffness=600 epsilon=0.0001
+        custom-shader r"
+vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+    float p = niri_clamped_progress;
+    float inv = 1.0 - p;
+
+    vec2 center = vec2(0.5, 0.5);
+    vec2 delta = coords_geo.xy - center;
+
+    float aspect = size_geo.x / size_geo.y;
+    float dist = length(delta * vec2(aspect, 1.0));
+
+    float angle = p * 4.0 * dist * 6.2832;
+    float s = sin(angle);
+    float c = cos(angle);
+    vec2 rotated = vec2(
+        delta.x * c - delta.y * s,
+        delta.x * s + delta.y * c
+    );
+
+    float pull = 1.0 - p * p * (1.5 - 0.5 * p * p);
+    vec2 uv = center + rotated * pull;
+
+    vec3 coords_tex = niri_geo_to_tex * vec3(uv, 1.0);
+    vec4 color = texture2D(niri_tex, coords_tex.st);
+
+    if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0)
+        color = vec4(0.0);
+
+    float edge_fade = 1.0 - smoothstep(0.0, 1.0, dist * 1.4);
+    color *= inv * (0.3 + 0.7 * edge_fade);
+
+    return color;
+}
+        "
+    }
+
+    window-resize {
+        spring damping-ratio=0.80 stiffness=500 epsilon=0.0001
+        custom-shader r"
+vec4 resize_color(vec3 coords_curr_geo, vec3 size_curr_geo) {
+    float p = niri_clamped_progress;
+
+    vec3 coords_prev = niri_geo_to_tex_prev * coords_curr_geo;
+    vec4 color_prev = texture2D(niri_tex_prev, coords_prev.st);
+
+    vec3 coords_next = niri_geo_to_tex_next * coords_curr_geo;
+    vec4 color_next = texture2D(niri_tex_next, coords_next.st);
+
+    float amp = 0.04 * sin(p * 3.14159);
+    float wave_x = amp * sin(coords_curr_geo.y * 8.0 * 3.14159);
+    float wave_y = amp * sin(coords_curr_geo.x * 5.6 * 3.14159);
+
+    float t = clamp(p + (wave_x + wave_y) * 0.5, 0.0, 1.0);
+    t = smoothstep(0.0, 1.0, t);
+
+    vec4 color = mix(color_prev, color_next, t);
+
+    float flash = 0.08 * sin(p * 3.14159);
+    color.rgb += flash * color.a;
+
+    return color;
+}
+        "
+    }
+
+    workspace-switch {
+        spring damping-ratio=0.85 stiffness=500 epsilon=0.00001
+    }
+
+    window-movement {
+        spring damping-ratio=0.72 stiffness=620 epsilon=0.0001
+    }
+
+    overview-open-close {
+        spring damping-ratio=0.75 stiffness=450 epsilon=0.0001
+    }
+
+    horizontal-view-movement {
+        spring damping-ratio=0.78 stiffness=580 epsilon=0.0001
+    }
+
+    config-notification-open-close {
+        spring damping-ratio=0.7 stiffness=900 epsilon=0.001
+    }
+}

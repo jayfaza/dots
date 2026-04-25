@@ -1,6 +1,9 @@
-spawn-at-startup "sh" "-c" "systemctl --user import-environment WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS XDG_CURRENT_DESKTOP && dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS XDG_CURRENT_DESKTOP && systemctl --user set-environment WAYLAND_DISPLAY=$WAYLAND_DISPLAY DISPLAY=$DISPLAY && systemctl --user start xdg-desktop-portal-gnome"
+spawn-at-startup "systemctl" "--user" "import-environment" "WAYLAND_DISPLAY" "DISPLAY" "DBUS_SESSION_BUS_ADDRESS" "XDG_CURRENT_DESKTOP"
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "DISPLAY" "DBUS_SESSION_BUS_ADDRESS" "XDG_CURRENT_DESKTOP"
+spawn-at-startup "systemctl" "--user" "start" "xdg-desktop-portal-gnome"
+spawn-at-startup "sh" "-c" "wl-paste --watch cliphist store"
 spawn-at-startup "waybar"
 spawn-at-startup "swaync"
 spawn-at-startup "awww-daemon"
 prefer-no-csd
-screenshot-path "~/screenshots/screenshot-%d-%h-%m.png"
+screenshot-path "~/screenshots/%Y-%m-%d_%H-%M-%S.png"

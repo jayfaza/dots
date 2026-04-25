@@ -4,21 +4,23 @@ window-rule {
 }
 
 window-rule {
-    match app-id="^*Nautilus"
+    match app-id=r"^org\.gnome\.Nautilus$"
     open-floating true
+    default-column-width { fixed 900; }
     default-window-height { fixed 700; }
-    default-column-width { fixed 700; }
-    min-width 900 
-    max-width 900 
-    min-height 700 
+    min-width 900
+    max-width 900
+    min-height 700
     max-height 900
     default-floating-position x=470 y=180 relative-to="bottom-left"
 }
 
+// Скруглённые углы для всех окон
 window-rule {
     geometry-corner-radius 20
     clip-to-geometry true
 }
+
 window-rule {
     match app-id="vesktop"
     opacity 0.95
@@ -28,6 +30,7 @@ window-rule {
     match app-id="Spotify"
     opacity 0.95
 }
+
 
 window-rule {
     match title="Testing"

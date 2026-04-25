@@ -1,0 +1,30 @@
+// ── Smooth ────────────────────────────────────────────────────────────────────
+// Мягкие, плавные анимации без отскоков. Всё скользит как по маслу.
+// Хорошо подходит для рабочего использования — не отвлекает.
+
+animations {
+    window-open {
+        spring damping-ratio=0.95 stiffness=400 epsilon=0.0001
+    }
+    window-close {
+        spring damping-ratio=0.95 stiffness=500 epsilon=0.0001
+    }
+    workspace-switch {
+        spring damping-ratio=0.92 stiffness=380 epsilon=0.00001
+    }
+    window-movement {
+        spring damping-ratio=0.92 stiffness=400 epsilon=0.0001
+    }
+    window-resize {
+        spring damping-ratio=0.92 stiffness=380 epsilon=0.0001
+    }
+    overview-open-close {
+        spring damping-ratio=0.90 stiffness=350 epsilon=0.0001
+    }
+    horizontal-view-movement {
+        spring damping-ratio=0.92 stiffness=390 epsilon=0.0001
+    }
+    config-notification-open-close {
+        spring damping-ratio=0.90 stiffness=500 epsilon=0.001
+    }
+}

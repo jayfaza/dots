@@ -1,0 +1,97 @@
+@import "colors.rasi"
+
+* {
+    bg:       @surface;
+    bg-alt:   @surface-bright;
+    border:   @primary;
+    selected: @surface-container-low;
+    fg:       @secondary;
+    fg-sel:   @primary;
+    grey:     @secondary-container;
+}
+
+window {
+    width: 680px;
+    background-color: @bg;
+    border: 2px;
+    border-color: @border;
+    border-radius: 16px;
+    padding: 0;
+}
+
+mainbox {
+    background-color: @bg;
+    spacing: 0;
+    padding: 12px;
+}
+
+inputbar {
+    children: [prompt, entry];
+    background-color: @bg-alt;
+    border-radius: 10px;
+    padding: 4px 10px;
+    margin: 0 0 10px 0;
+    spacing: 8px;
+}
+
+prompt {
+    background-color: transparent;
+    text-color: @fg-sel;
+    padding: 6px 0;
+    font: "JetBrains Mono Bold 13";
+}
+
+entry {
+    background-color: transparent;
+    text-color: @fg;
+    padding: 6px 0;
+    font: "JetBrains Mono Regular 13";
+    placeholder: "search...";
+    placeholder-color: @grey;
+}
+
+listview {
+    background-color: transparent;
+    columns: 1;
+    lines: 8;
+    spacing: 4px;
+    padding: 2px;
+    scrollbar: false;
+}
+
+element {
+    background-color: transparent;
+    text-color: @fg;
+    border-radius: 8px;
+    padding: 6px 8px;
+    spacing: 10px;
+    orientation: horizontal;
+}
+
+element selected {
+    background-color: @selected;
+    text-color: @fg-sel;
+}
+
+element-icon {
+    size: 42px;
+    border-radius: 6px;
+    background-color: transparent;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    font: "JetBrains Mono Regular 12";
+    vertical-align: 0.5;
+    highlight: bold;
+}
+
+scrollbar {
+    background-color: @bg-alt;
+    handle-color: @border;
+    handle-width: 4px;
+    border-radius: 4px;
+    width: 4px;
+    margin: 0 0 0 4px;
+}

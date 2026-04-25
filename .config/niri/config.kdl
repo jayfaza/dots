@@ -5,5 +5,5 @@ include "layer-rules.kdl"
 include "window-rules.kdl"
 include "windows.kdl"
 include "binds.kdl"
-include "animations.kdl"
+include "animations.kdl" 
 

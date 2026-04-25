@@ -6,8 +6,8 @@ layer-rule {
 
     blur {
         on
-        passes 4 
-        radius 2 
+        passes 4
+        radius 2
     }
 
     shadow {
@@ -26,8 +26,8 @@ layer-rule {
     block-out-from "screencast"
     blur {
         on
-        passes 3 
-        radius 2 
+        passes 3
+        radius 2
     }
 }
 
