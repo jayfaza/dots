@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # OCR: выделить регион → препроцессинг → tesseract → буфер
-# Препроцессинг: апскейл 3x + grayscale + contrast stretch → точность и скорость выше
+# Автоматически выбирает PSM режим по размеру региона
 
 TMP_IMG="/tmp/ocr-capture.png"
 TMP_ENHANCED="/tmp/ocr-enhanced.png"
@@ -17,51 +17,77 @@ grim -g "$region" "$TMP_IMG" || {
     exit 1
 }
 
-# Препроцессинг для лучшего распознавания:
-# 1. Апскейл в 3x — tesseract работает лучше с крупным текстом
-# 2. Grayscale — убирает шум цвета
-# 3. contrast-stretch — усиливает контраст текст/фон
-# 4. Sharpen — делает края букв чёткими
+# Определяем размер региона из строки "X,Y WxH"
+region_size=$(echo "$region" | grep -oP '\d+x\d+')
+width=$(echo "$region_size"  | cut -dx -f1)
+height=$(echo "$region_size" | cut -dx -f2)
+
+# Выбираем PSM по размеру:
+#   одно слово  : w<120 и h<60
+#   одна строка : h<80
+#   блок текста : всё остальное
+if [[ "$width" -lt 120 && "$height" -lt 60 ]]; then
+    psm_order=(8 7 6)    # single_word → single_line → single_block
+elif [[ "$height" -lt 80 ]]; then
+    psm_order=(7 8 6)    # single_line → single_word → single_block
+else
+    psm_order=(6 3 11)   # single_block → auto → sparse_text
+fi
+
+# Препроцессинг: апскейл 4x для маленьких регионов, 3x для больших
+if [[ "$width" -lt 200 || "$height" -lt 80 ]]; then
+    scale="400%"
+else
+    scale="300%"
+fi
+
 convert "$TMP_IMG" \
-    -resize 300% \
+    -resize "$scale" \
     -colorspace Gray \
     -contrast-stretch 0.15x0.15% \
     -sharpen 0x1 \
     "$TMP_ENHANCED" 2>/dev/null
 
-# psm 3 = автоопределение блоков (лучше для произвольного текста на экране)
-# oem 1 = только LSTM (быстрее и точнее чем oem 3)
-tesseract "$TMP_ENHANCED" "$TMP_TXT" -l eng+rus --psm 3 --oem 1 2>/dev/null
+# Пробуем PSM режимы по очереди пока не получим текст
+try_ocr() {
+    local img="$1"
+    local psm="$2"
+    tesseract "$img" "$TMP_TXT" -l eng+rus --psm "$psm" --oem 1 2>/dev/null
+    local result
+    result=$(sed '/^[[:space:]]*$/d' "${TMP_TXT}.txt" 2>/dev/null | sed 's/[[:space:]]*$//')
+    rm -f "${TMP_TXT}.txt"
+    printf '%s' "$result"
+}
 
-TXT_FILE="${TMP_TXT}.txt"
+text=""
+for psm in "${psm_order[@]}"; do
+    text=$(try_ocr "$TMP_ENHANCED" "$psm")
+    [[ -n "$text" ]] && break
+done
 
-if [[ ! -f "$TXT_FILE" ]]; then
-    notify-send -u critical "OCR" "Tesseract failed"
-    exit 1
-fi
-
-text=$(sed '/^[[:space:]]*$/d' "$TXT_FILE" | sed 's/[[:space:]]*$//')
-
-rm -f "$TMP_ENHANCED" "$TXT_FILE"
-
+# Если не нашли — пробуем инверт (светлый текст на тёмном фоне)
 if [[ -z "$text" ]]; then
-    # Второй шанс: если не распознало — пробуем с инвертом (светлый текст на тёмном фоне)
     convert "$TMP_IMG" \
-        -resize 300% \
+        -resize "$scale" \
         -colorspace Gray \
         -negate \
         -contrast-stretch 0.15x0.15% \
         -sharpen 0x1 \
         "/tmp/ocr-inverted.png" 2>/dev/null
 
-    tesseract "/tmp/ocr-inverted.png" "$TMP_TXT" -l eng+rus --psm 3 --oem 1 2>/dev/null
-    text=$(sed '/^[[:space:]]*$/d' "${TMP_TXT}.txt" 2>/dev/null | sed 's/[[:space:]]*$//')
-    rm -f "/tmp/ocr-inverted.png" "${TMP_TXT}.txt"
+    for psm in "${psm_order[@]}"; do
+        text=$(try_ocr "/tmp/ocr-inverted.png" "$psm")
+        [[ -n "$text" ]] && break
+    done
 
-    if [[ -z "$text" ]]; then
-        notify-send -u normal "OCR" "No text detected"
-        exit 0
-    fi
+    rm -f "/tmp/ocr-inverted.png"
+fi
+
+rm -f "$TMP_ENHANCED"
+
+if [[ -z "$text" ]]; then
+    notify-send -u normal "OCR" "No text detected"
+    exit 0
 fi
 
 printf '%s' "$text" | wl-copy
