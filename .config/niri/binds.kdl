@@ -51,5 +51,5 @@ binds {
     Mod+F9  { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
 
     // ── Screenshot ────────────────────────────────────────────
-    Delete { screenshot; }
+    Delete { spawn "bash" "-c" "~/scripts/screenshot.sh"; }
 }

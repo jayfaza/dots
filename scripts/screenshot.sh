@@ -1,17 +1,22 @@
 #!/bin/bash
 
-# Take a screenshot with region selection using grimblast (niri-compatible)
-# Saves to ~/screenshots/ with timestamp filename
-
 output="$HOME/screenshots/$(date '+%Y-%m-%d_%H-%M-%S').png"
+mkdir -p "$HOME/screenshots"
 
-if command -v grimblast &>/dev/null; then
-    grimblast save area "$output"
-elif command -v grim &>/dev/null && command -v slurp &>/dev/null; then
-    grim -g "$(slurp)" "$output"
-else
-    # Fallback: full screen
-    grim "$output"
-fi
+# Colors: background=dark overlay, selection=transparent, border=primary
+primary=$(grep "@define-color primary " ~/.config/waybar/colors.css | grep -oP '#\w+')
+border="${primary#\#}ee"
+bg="00000066"
+sel="00000000"
 
-notify-send "Screenshot saved" "$(basename "$output")"
+region=$(slurp -b "$bg" -c "$border" -s "$sel" -w 2 2>/dev/null) || exit 0
+
+grim -g "$region" "$output" || exit 1
+
+wl-copy < "$output"
+
+notify-send \
+    -h boolean:transient:true \
+    -h "string:image-path:$output" \
+    "Screenshot captured" \
+    "Saved & copied to clipboard"

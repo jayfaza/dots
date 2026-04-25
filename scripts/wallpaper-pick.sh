@@ -46,7 +46,11 @@ set_wall() {
     # Restart swaync to apply new theme (matugen doesn't handle this in 4.1.0)
     pkill -f swaync; sleep 0.3; swaync &
 
-    notify-send "Wallpaper changed" "$(basename "$selected_file")"
+    notify-send \
+        -h boolean:transient:true \
+        -h "string:image-path:$selected_file" \
+        "Wallpaper changed" \
+        "$(basename "$selected_file")"
 }
 
 selectpic
