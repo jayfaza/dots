@@ -12,15 +12,25 @@ border="${primary#\#}ee"
 
 region=$(slurp -b "00000066" -c "$border" -s "00000000" -w 2 2>/dev/null) || exit 0
 
-grim -g "$region" "$TMP_IMG" || {
+# Парсим X,Y W H и обрезаем рамку (2px с каждой стороны)
+rx=$(echo "$region" | grep -oP '^\d+')
+ry=$(echo "$region" | grep -oP ',\d+' | tr -d ',')
+width=$(echo "$region"  | grep -oP '\d+x' | tr -d 'x')
+height=$(echo "$region" | grep -oP 'x\d+$' | tr -d 'x')
+
+pad=2
+rx=$((rx + pad))
+ry=$((ry + pad))
+width=$((width - pad * 2))
+height=$((height - pad * 2))
+[[ $width  -lt 1 ]] && width=1
+[[ $height -lt 1 ]] && height=1
+region_crop="${rx},${ry} ${width}x${height}"
+
+grim -g "$region_crop" "$TMP_IMG" || {
     notify-send -u critical "OCR" "Failed to capture screen"
     exit 1
 }
-
-# Определяем размер региона из строки "X,Y WxH"
-region_size=$(echo "$region" | grep -oP '\d+x\d+')
-width=$(echo "$region_size"  | cut -dx -f1)
-height=$(echo "$region_size" | cut -dx -f2)
 
 # Выбираем PSM по размеру:
 #   одно слово  : w<120 и h<60

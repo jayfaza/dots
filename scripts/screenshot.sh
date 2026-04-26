@@ -14,7 +14,18 @@ sel="00000000"
 
 region=$(slurp -b "$bg" -c "$border" -s "$sel" -w 2 2>/dev/null) || exit 0
 
-grim -g "$region" "$output" || exit 1
+# Обрезаем рамку (2px с каждой стороны)
+rx=$(echo "$region" | grep -oP '^\d+')
+ry=$(echo "$region" | grep -oP ',\d+' | tr -d ',')
+rw=$(echo "$region" | grep -oP '\d+x' | tr -d 'x')
+rh=$(echo "$region" | grep -oP 'x\d+$' | tr -d 'x')
+pad=2
+rx=$((rx + pad)); ry=$((ry + pad))
+rw=$((rw - pad * 2)); rh=$((rh - pad * 2))
+[[ $rw -lt 1 ]] && rw=1
+[[ $rh -lt 1 ]] && rh=1
+
+grim -g "${rx},${ry} ${rw}x${rh}" "$output" || exit 1
 
 wl-copy < "$output"
 

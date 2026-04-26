@@ -22,6 +22,7 @@ binds {
     Mod+F       { maximize-column; }
     Mod+Alt+F   { fullscreen-window; }
     Mod+R       { switch-preset-column-width; }
+    Mod+V       { toggle-window-floating; }
 
     // ── Resize columns ────────────────────────────────────────
     Mod+Minus { set-column-width "-10%"; }
