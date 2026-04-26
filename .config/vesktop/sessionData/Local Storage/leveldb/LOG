@@ -1,0 +1,6 @@
+2026/04/24-16:42:42.193 42cb Reusing MANIFEST /home/jayfaza/.config/vesktop/sessionData/Local Storage/leveldb/MANIFEST-000001
+2026/04/24-16:42:42.201 42cb Recovering log #86
+2026/04/24-16:42:42.201 42cb Reusing old log /home/jayfaza/.config/vesktop/sessionData/Local Storage/leveldb/000086.log 
+2026/04/24-16:47:56.262 42f8 Level-0 table #90: started
+2026/04/24-16:47:56.267 42f8 Level-0 table #90: 36546 bytes OK
+2026/04/24-16:47:56.273 42f8 Delete type=0 #86

@@ -1,0 +1,9 @@
+{
+    "theme": "matugen",
+    "discordBranch": "ptb",
+    "minimizeToTray": true,
+    "arRPC": true,
+    "splashColor": "rgb(209, 197, 180)",
+    "splashBackground": "rgb(23, 19, 11)",
+    "openLinksWithElectron": true
+}
