@@ -45,6 +45,7 @@ set_wall() {
 
     # Restart swaync to apply new theme (matugen doesn't handle this in 4.1.0)
     pkill -f swaync; sleep 0.3; swaync &
+    sleep 1
 
     notify-send \
         -h boolean:transient:true \

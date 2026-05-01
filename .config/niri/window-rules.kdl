@@ -13,26 +13,68 @@ window-rule {
     min-height 700
     max-height 900
     default-floating-position x=470 y=180 relative-to="bottom-left"
+
+    background-effect {
+        blur true
+        xray false 
+    }
 }
 
+window-rule {
+    match app-id="kitty"
+
+    opacity 0.90
+    background-effect {
+        blur true
+    }
+}
 // Скруглённые углы для всех окон
 window-rule {
     geometry-corner-radius 20
     clip-to-geometry true
 }
 
+// Vesktop: normal blur — за окном Discord видно обои/другие окна
 window-rule {
     match app-id="vesktop"
+
     opacity 0.95
+
+    background-effect {
+        blur true
+        xray false
+    }
 }
 
+// Spotify: лёгкий blur через x-ray
 window-rule {
     match app-id="Spotify"
+
     opacity 0.95
+
+    background-effect {
+        blur true
+        xray true
+    }
 }
 
 
 window-rule {
     match title="Testing"
     open-floating true
+}
+
+// Loupe (просмотрщик изображений): блюр на всплывающих меню
+// popups {} — новая фича niri 26.04
+window-rule {
+    match app-id="Loupe"
+
+    popups {
+        geometry-corner-radius 15
+        opacity 0.90
+
+        background-effect {
+            blur true
+        }
+    }
 }

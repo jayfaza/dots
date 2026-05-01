@@ -1,14 +1,9 @@
+// Waybar: x-ray blur — быстрый, размывает обои один раз
 layer-rule {
     match namespace="waybar"
 
     opacity 0.85
     block-out-from "screencast"
-
-    blur {
-        on
-        passes 4
-        radius 2
-    }
 
     shadow {
         on
@@ -19,19 +14,33 @@ layer-rule {
         color "#00000064"
     }
 
-}
-layer-rule {
-    match namespace="rofi"
-    opacity 0.90
-    block-out-from "screencast"
-    blur {
-        on
-        passes 3
-        radius 2
+    background-effect {
+        blur true
+        xray true
     }
 }
 
+// Rofi: normal blur — честный, видно что реально за лаунчером
+// geometry-corner-radius обрезает blur по форме окна, иначе острые углы вылезают
+layer-rule {
+    match namespace="rofi"
+
+    opacity 0.90
+    block-out-from "screencast"
+    geometry-corner-radius 20
+
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+// SwayNC: без blur — swaync занимает весь экран как layer surface,
+// blur размазывался бы по всему экрану, а не только по панели
 layer-rule {
     match namespace="swaync"
+
     opacity 0.90
+    geometry-corner-radius 20
+
 }
