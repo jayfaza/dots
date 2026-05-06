@@ -2,7 +2,7 @@
 layer-rule {
     match namespace="waybar"
 
-    opacity 0.85
+    opacity 0.8
     block-out-from "screencast"
 
     shadow {
