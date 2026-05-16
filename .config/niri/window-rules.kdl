@@ -4,6 +4,11 @@ window-rule {
 }
 
 window-rule {
+    match title="osu!"
+    open-maximized true
+}
+
+window-rule {
     match app-id=r"^org\.gnome\.Nautilus$"
     open-floating true
     default-column-width { fixed 900; }

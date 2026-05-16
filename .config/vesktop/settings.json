@@ -3,7 +3,7 @@
     "discordBranch": "ptb",
     "minimizeToTray": true,
     "arRPC": true,
-    "splashColor": "rgb(213, 195, 182)",
-    "splashBackground": "rgb(25, 18, 12)",
+    "splashColor": "rgb(211, 196, 180)",
+    "splashBackground": "rgb(24, 19, 11)",
     "openLinksWithElectron": true
 }
